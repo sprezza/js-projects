@@ -33,6 +33,9 @@ const month_names = [
 ];
 
 let month_picker = document.querySelector("#month-picker");
+month_picker.onclick = () => {
+  month_list.classList.add("show");
+};
 // GENERATE CALENDAR
 
 GenerateCalendar = (month, year) => {
@@ -87,6 +90,29 @@ GenerateCalendar = (month, year) => {
     }
     calendar_days.appendChild(day);
   }
+};
+
+let month_list = calendar.querySelector(".month-list");
+
+month_names.forEach((e, index) => {
+  let month = document.createElement("div");
+  month.innerHTML = `<div>${e}</div>`;
+  month.onclick = () => {
+    month_list.classList.remove("show");
+    curr_month.value = index;
+    GenerateCalendar(curr_month.value, curr_year.value);
+  };
+  month_list.appendChild(month);
+});
+
+document.querySelector("#prev-year").onclick = () => {
+  --curr_year.value;
+  GenerateCalendar(curr_month.value, curr_year.value);
+};
+
+document.querySelector("#next-year").onclick = () => {
+  ++curr_year.value;
+  GenerateCalendar(curr_month.value, curr_year.value);
 };
 
 let currDate = new Date();
